@@ -13,6 +13,8 @@ public class MonkeyBallAgent : Agent
 
     FollowCamera followCamera;
     Rigidbody m_BallRb;
+    GoalDetect goalDetect;
+    DeathDetect deathDetect;
 
     float reset_x, reset_y, reset_z;
     IFloatProperties m_resetParams;
@@ -22,6 +24,12 @@ public class MonkeyBallAgent : Agent
         base.InitializeAgent();
         m_BallRb = sphere.GetComponent<Rigidbody>();
         followCamera = Camera.main.GetComponent<FollowCamera>();
+
+        goalDetect = goal.GetComponent<GoalDetect>();
+        goalDetect.agent = this;
+
+        deathDetect = deathPlane.GetComponent<DeathDetect>();
+        deathDetect.agent = this;
 
         // Floor rot: (0, 0, 0)
 
@@ -65,11 +73,28 @@ public class MonkeyBallAgent : Agent
         Done();
 
         // -- Do a little cutesy something to celebrate success and feel accomplished as a monkey
-        // StartCoroutine(GoalReachedAnimation(0.5f))
+        StartCoroutine(GoalReachedAnimation(0.5f));
+    }
+
+    public void Death()
+    {
+        AddReward(-1f);
+
+        // -- Do a little camera flip to watch the monkey fall into the abbyss of despair that's underneath
+        StartCoroutine(DeathAnimation(1f));
+
+        Done();
     }
 
     IEnumerator GoalReachedAnimation(float time)
     {
+        // Add animation
+        yield return new WaitForSeconds(time);
+    }
+
+    IEnumerator DeathAnimation(float time)
+    {
+        // Add animation
         yield return new WaitForSeconds(time);
     }
 
@@ -81,6 +106,7 @@ public class MonkeyBallAgent : Agent
         floor.transform.Rotate(Camera.main.transform.right, vectorAction[1]);
         
         followCamera.MoveCamera(vectorAction[2]);
+
 
         // Penalty given each step to encourage agent to finish task quickly
         AddReward(-1f / maxStep);
@@ -102,13 +128,19 @@ public class MonkeyBallAgent : Agent
         // TODO: 
         // - Place Ball at starting position
         // - turn Floor to starting position
+        // - reset velocity!
         // - reset flags
 
         // ball to original position
         m_BallRb.position = new Vector3(reset_x, reset_y, reset_z);
+        m_BallRb.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
 
         // floor to no rotation
         floor.transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+
+        // initial velocity has to be 0
+        m_BallRb.velocity = new Vector3(0, 0, 0);
+        m_BallRb.angularVelocity = new Vector3(0, 0, 0);        
 
         SetResetParameters();
     }

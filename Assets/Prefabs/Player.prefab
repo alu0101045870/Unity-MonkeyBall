@@ -96,15 +96,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 1
+    vectorObservationSize: 11
     numStackedVectorObservations: 1
-    vectorActionSize: 01000000
+    vectorActionSize: 03000000
     vectorActionDescriptions: []
-    vectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+    vectorActionSpaceType: 1
+  m_Model: {fileID: 5022602860645237092, guid: 15f751451671d854985842c2b9dde21e, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
-  m_BehaviorName: My Behavior
+  m_BehaviorType: 2
+  m_BehaviorName: MonkeyLearning
   m_TeamID: 0
   m_UseChildSensors: 1
 --- !u!114 &50487458
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 6622956130843233579}
   m_Layer: 2
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
