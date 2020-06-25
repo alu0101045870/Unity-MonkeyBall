@@ -51,39 +51,42 @@ public class MonkeyBallAgent : Agent
         // Current speed (?)
         AddVectorObs(m_BallRb.velocity);
 
+        // Camera rotation
+        AddVectorObs(followCamera.transform.rotation.y);
+
         // Rotation [x, z] of the floor/ground
         AddVectorObs(floor.transform.rotation.x);
         AddVectorObs(floor.transform.rotation.z);
 
         // Relative distance between ball and floor / goal
-        AddVectorObs(m_BallRb.position - floor.transform.position);
+        AddVectorObs(m_BallRb.position - floor.transform.position);         // TODO: Test with position Vector3, for science
         AddVectorObs(m_BallRb.position - goal.transform.position);
 
         // _____________ Added with the Raycast 3D Component _______________
-        // - Perception of the floor underneath (am I in contact with the floor?)
-        // - Perception of the floor ahead (can I move forward?)
+        // - Perception of the floor underneath (am I in contact with the floor?)   [CURRENTLY DISABLED]
+        // - Perception of the floor ahead (can I move forward?)                    [CURRENTLY DISABLED]
         // - Perception of obstacles ahead (can I move without finding obstacles?)
         
     }
 
     public void GoalReached()
     {
-        AddReward(5f);
+        AddReward(10f);
 
         Done();
 
         // -- Do a little cutesy something to celebrate success and feel accomplished as a monkey
-        StartCoroutine(GoalReachedAnimation(0.5f));
+        StartCoroutine(GoalReachedAnimation(1f));
     }
 
     public void Death()
     {
-        AddReward(-1f);
+        AddReward(-5f);
+
+        Done();
 
         // -- Do a little camera flip to watch the monkey fall into the abbyss of despair that's underneath
         StartCoroutine(DeathAnimation(1f));
-
-        Done();
     }
 
     IEnumerator GoalReachedAnimation(float time)

@@ -16,7 +16,7 @@ public class GoalDetect : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            // Debug.Log("I REACHED THE GOAL!");
+            //Debug.Log("I REACHED THE GOAL!");
             agent.GoalReached();
         }
     }
