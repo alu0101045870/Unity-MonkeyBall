@@ -30,4 +30,12 @@ public class FollowCamera : MonoBehaviour
         transform.position = target.transform.position - (rotation * offset);
         transform.LookAt(target.transform);
     }
+
+    public void ResetCameraPos()
+    {
+        Quaternion rotation = Quaternion.Euler(0, 0, 0);
+
+        transform.position = target.transform.position - (rotation * offset);
+        transform.LookAt(target.transform);
+    }
 }

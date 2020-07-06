@@ -15,8 +15,7 @@ public class GoalDetect : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {
-            //Debug.Log("I REACHED THE GOAL!");
+        { 
             agent.GoalReached();
         }
     }
