@@ -16,7 +16,6 @@ public class DeathDetect : MonoBehaviour
 
         if (agent.gameObject.transform.position.y < gameObject.transform.position.y)
         {
-            //Debug.Log("I FUCKING DIED!");
             agent.Death();
         }
     }
